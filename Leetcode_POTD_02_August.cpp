@@ -1,100 +1,61 @@
-class Solution {
-  public:
-    // Ye khud se banaye the, POTD mein to ban gaya.
-    int celebrity(vector<vector<int> >& mat) {
-        /*
-            Logic ye hai ki celebrity wale row mein ek bhi 1 nahi hoga.
-            Aur us column mein usko chhor kar sabhi 1 honge.
-            matlab n-1 one honge total.
-        */
-        vector<int> temp;
-        int n = mat.size();
-        for(int i=0;i<n;i++){
-            int cnt=0;
-            for(int j=0;j<n;j++){
-                if(mat[i][j]==1)
-                    cnt++;
-            }
-            if(cnt==0)
-                temp.push_back(i);
-        }
-        int ans = -1;
-        if(temp.size()==0)
-            return -1;
-        for(auto &element:temp){
-            int cnt=0;
-            for(int i=0;i<n;i++){
-                if(mat[i][element]==1)
-                    cnt++;
-            }
-            if(cnt==n-1){
-                ans = element;
-                break;// Sirf 1 hi celebrity hoga.
-            }
-        }
-        return ans;
-    }
-};
+// Conceptual Qusetion hai ye.
+// Hints padhkar ban gaya ye.
 
-class Solution {
-  public:
-    // Ye stack wala method Naman Sir Padhaye the.
-    /*
-      Isme basically hum log andaaz laga kar O(N) me reduce kar diye.
-      Agar usko koi jaanta hai to wo pakka celebrity nahi hai.
-    */
-    int celebrity(vector<vector<int> >& mat) {
-        int n = mat.size();
-        stack<int> stk;
-        for(int i=0;i<n;i++)
-            stk.push(i);
-        while(stk.size()>=2){
-            int i=stk.top();stk.pop();
-            int j=stk.top();stk.pop();
-            // Agar ye kisi ko nahi jaanta hai to ye may be ho sakta hai.
-            if(mat[i][j]==0)
-                stk.push(i);
-            // Ye kisi ko jaanta hai to pakka ye nahi hone wala.
-            else if(mat[i][j]==1)
-                stk.push(j);
-        }
-        int ans = stk.top();
-        for(int i=0;i<n;i++){
-            // Cross verify kiye hai isse.
-            // Usko koi nahi jaane ya ye kisi ko jaan le.
-            if(i!=ans){
-                if(mat[i][ans]== 0||mat[ans][i]==1)
-                    return -1;
-            }
-        }
-        return ans;
-    }
-};
+// Yaha par circular rray ka concept samajhna hai ki 1st and last elemnt connected hai.
+/*
+    Logic ye hai ki jitna total 1 hai pure array mein hume utna size ke 
+    subarray ka need hoga sab ko ek saath karne ke liye.
 
+    Ab har subarray of length total me dekh lenge ki kitna 0 hai isme.
+    Jitna 0, utni baar swap required.
+
+    Sliding window ke use se optimize ho jayega.
+*/
 class Solution {
-  public:
-    // Isme O(1) space use hua hai.
-    int celebrity(vector<vector<int> >& mat) {
-        // Same whi approach hai stack wala but isme two pointer se nikaale hai.
-        int n = mat.size();
-        int i=0,j=n-1;
-        while(i<j){
-            // Agar ye kisi ko nahi jaanta hai to baaki persons ke liye check kar liye hai. 
-            if(mat[i][j]==0)
-                j--;
-            // Agar ye kisi ko jaanta hai to ye pakka nahi hoga.
-            // Tab hum next person ko check karenge anwer ke liye.
-            else if(mat[i][j]==1)
-                i++;
+public:
+    int minSwaps(vector<int>& nums) {
+        int cnt = 0;
+        int n = nums.size();
+        // No. of 1s count kar liye hai.
+        for (auto& i : nums) {
+            if (i == 1)
+                cnt++;
         }
-        int ans = i;
-        // Phir se cross verification.
-        for(int i=0;i<n;i++){
-            if(i!=ans){
-                if(mat[i][ans]==0 || mat[ans][i]==1)
-                    return -1;
-            }
+
+        // Circular array ke liye array ko khud se merge kar diye hai.
+        for (int i = 0; i < n; i++)
+            nums.push_back(nums[i]);
+
+        int ans = 0;
+        int i = 0, j = 0;
+        // Initial sub-array.
+        while (j < cnt) {
+            if (nums[j] == 0)
+                ans++;
+            j++;
         }
+        // Ab j=n ho chuka hai.
+
+        // Itna initially lag raha hai.
+        int temp = ans;
+        // Ab har sub-array me dekho.
+        while (j < (2 * n)) {
+            // Hume 0 count karn ahi.
+
+            // Agar ye 0 hai matlab count me add hoga.
+            if (nums[j] == 0)
+                temp++;
+            j++;
+
+            // Agar ye 0 tha to, count mein 1 loss ho gaya.
+            if (nums[i] == 0)
+                temp--;
+            i++;
+
+            // Minimum possible swap hi humara answer hoga.
+            ans = min(ans, temp);
+        }
+
         return ans;
     }
 };
