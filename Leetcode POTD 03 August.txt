@@ -1,0 +1,40 @@
+// Method 1 :- O(N) Time and O(N) Space (Using Hash Table)
+
+// Easy Qustion hai ye POTD ka.
+// True hone ke liye dono array mein same elements same no. of times hone chahiye.
+
+class Solution {
+public:
+    bool canBeEqual(vector<int>& target, vector<int>& arr) {
+        int n = arr.size();
+        // Array ke elements at max 1000 diye hai.
+        vector<int> v1(1001),v2(1001);
+        for(int i=0;i<n;i++){
+            v1[target[i]]++;
+            v2[arr[i]]++;
+        }
+        for(int i=0;i<1001;i++){
+            if(v1[i]!=v2[i])
+                return false;
+        }
+        return true;
+    }
+};
+
+// Method 2 :- O(N*log(N)) Time and O(1) Space (Using Hash Table)
+
+class Solution {
+public:
+    // Isme sort kar dene se saare elements ek jagah aa gaye hai.
+    // jisse compare karna easy ho gaya hai.
+    bool canBeEqual(vector<int>& target, vector<int>& arr) {
+        int n = arr.size();
+        sort(target.begin(),target.end());
+        sort(arr.begin(),arr.end());
+        for(int i=0;i<n;i++){
+            if(arr[i]!=target[i])
+                return false;
+        }
+        return true;
+    }
+};
