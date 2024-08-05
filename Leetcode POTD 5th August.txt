@@ -1,0 +1,26 @@
+// 5th August POTD. Leetcode 2053. Kth Distinct String in an Array
+
+// Halka sochne par ban gaya POTD mein.
+class Solution {
+public:
+    // Kyu ki hume sirf waise eleemnts se deal karna hai jo sirf 1 baar hai.
+    // isi liye 1 freq. wale ko new array me daal liye hai.
+
+    string kthDistinct(vector<string>& arr, int k) {
+        unordered_map<string,int> mp;
+        for(auto &i:arr){
+            mp[i]++;
+        }
+        vector<string> helper;
+        for(auto &i:arr){
+            if(mp[i]==1)
+                helper.push_back(i);
+        }
+        // Agar k se kam elements hai to empty string.
+        if(helper.size()<k)
+            return "";
+
+        // Nhi to wo string.(0-based indexing mein).
+        return helper[k-1];
+    }
+};
