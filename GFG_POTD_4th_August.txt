@@ -1,0 +1,42 @@
+// GFG POTD 4th August.
+//N meetings in a room.
+
+class Solution {
+  public:
+    // Hume room me meeting ko maximize karna hai.
+    // Isme greedy approach use karenge.
+    
+    int maxMeetings(int n, int start[], int end[]) {
+        // Your code here
+        /*
+            Logic ye hoga ki hum end-time ke basis par sort kar lenge.
+            As usual 1 meeting to hoga hi humesha.
+            
+            Ab iterate karke dekhenge ki agr pichle meeting ka end-time is meeting ke start time se kam hai kya.
+            Agar hai to cnt++ aur last end-time ko bhi change kar denge.
+        */
+        
+        int ans = 1;// At least 1 meeting hoga hi.
+        
+        vector<pair<int,int>> v;
+        for(int i=0;i<n;i++){
+            v.push_back({end[i],start[i]});
+        }
+        // End-Time ke basis par sort.
+        sort(v.begin(),v.end());
+        
+        // Ab dekhenge ki meeting kab end ho raha ahi.
+        int last = v[0].first;
+        
+        for(int i=1;i<n;i++){
+            // Agar next meeting iske finish hone ke baad start hua matlab wo bhi ho sakta hai.
+            if(last<v[i].second){
+                ans++;
+                // Saath hi last end-time ko bhi modify kar denge.
+                last = v[i].first;
+            }
+        }
+        
+        return ans;
+    }
+};
