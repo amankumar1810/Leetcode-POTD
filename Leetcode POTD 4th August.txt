@@ -1,0 +1,32 @@
+// Leetcode POTD 4th August
+// 1508. Range Sum of Sorted Subarray Sums
+
+// Brute-Force Approach chal gaya isme.
+/*
+    Saara sub-array generate kar do.
+    Unko sort kar do.
+    Ab left to right ka sum nikaal do.
+*/
+class Solution {
+public:
+    int rangeSum(vector<int>& nums, int n, int left, int right) {
+        vector<int> v;// isi me store hoga.
+        for (int i = 0; i < n; i++) {
+            int sum = 0;
+            for (int j = i; j < n; j++) {
+                sum += nums[j];
+                v.push_back(sum);// saara sub-array daal denge.
+            }
+        }
+        // Sort kar lenge.
+        sort(v.begin(), v.end());
+        long long ans = 0;
+        int mod = 1e9 + 7;
+        
+        // 1-based indexing follow hoga.
+        for (int i = left - 1; i <= right - 1; i++) {
+            ans = ((ans % mod) + (v[i] % mod)) % mod;
+        }
+        return ans % mod;
+    }
+};
