@@ -1,0 +1,99 @@
+//Leetcode POTD 6th August
+// 3016. Minimum Number of Pushes to Type Word II
+
+// My Solution1 :-
+
+// POTD ka ye question subah subah ban gaya tha.
+/*
+    Logic ye hai ki jab hum re-mapping kar sakte hai tab jo number sabse jyada baar aa rha hai,
+    usko 1st me rakhenge taaki 1 hi baar press karne se kaam cahl jaaye.
+
+    Phir baaki ko bhi usi tarah se optimally rakhenge.
+*/
+class Solution {
+public:
+    int minimumPushes(string word) {
+        int sz = word.size();// string ka size.
+        
+        // Freq. store karne se pata chal jaayega ki kitn adistinct character hai.
+        map<char, int> mp;
+        for (auto& i : word)
+            mp[i]++;
+
+        int n = mp.size();// no. of distinct characters.
+
+        // Hum decreasing order of freq. me arrange kar lenge taaki jyada baar aane wala
+        // Pehle click ho 1 hi baar mein.
+        vector<int> freq;
+        for (auto& i : mp)
+            freq.push_back(i.second);
+        sort(freq.rbegin(), freq.rend());
+
+        // Agar 8 se kam hai distinct char. matlab sab ko aage rakhne se kaam ho jayega.
+        if (n <= 8)
+            return sz * 1;
+
+        // is case me most freq. 1 ko 1st position par aur bache hue ko 2nd position par.
+        else if (n <= 16) {
+            int ans = 0;
+            for (int i = 0; i < 8; i++)
+                ans += freq[i] * 1;
+            for (int i = 8; i < n; i++)
+                ans += freq[i] * 2;
+            return ans;
+        } 
+
+        // Same 2nd for-loop ka logic.
+        else if (n <= 24) {
+            int ans = 0;
+            for (int i = 0; i < 8; i++)
+                ans += freq[i] * 1;
+            for (int i = 8; i < 16; i++)
+                ans += freq[i] * 2;
+            for (int i = 16; i < n; i++)
+                ans += freq[i] * 3;
+            return ans;
+        } 
+        
+        // Same 2nd for-loop ka logic.
+        else {
+            int ans = 0;
+            for (int i = 0; i < 8; i++)
+                ans += freq[i] * 1;
+            for (int i = 8; i < 16; i++)
+                ans += freq[i] * 2;
+            for (int i = 16; i < 24; i++)
+                ans += freq[i] * 3;
+            for (int i = 24; i < n; i++)
+                ans += freq[i] * 4;
+            return ans;
+        }
+        // Is tarah se answer nikaal sakte hai hum log.
+    }
+};
+
+// My Solution 2 :-
+
+// Editorial section ka solution.
+// same piche wala approach use kiye hai bhut 1 baar mein traversal me ho gaya hai.
+
+class Solution {
+public:
+    int minimumPushes(string word) {
+        vector<int> freq(26);
+        for(auto &i:word)
+            freq[i-'a']++;
+        // Decreasing freq. me sort kar diye.
+        sort(freq.rbegin(),freq.rend());
+        int ans = 0;
+        for(int i=0;i<26;i++){
+            // 0 aa raha hai matlab ab aur character nahi h.
+            if(freq[i]==0)
+                break;
+            // Same mera logic kaam kar raha hai.
+            // (i/8 + 1) se aa raha hai wo order.
+            ans+=(freq[i]*(i/8+1));
+        }
+        return ans;
+    }
+};
