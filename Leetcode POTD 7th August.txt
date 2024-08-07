@@ -1,0 +1,61 @@
+// Leetcode POTD 7th August
+// Integer to English Words (273)
+
+// Iska code bas samjhe hai, khud se liye nahi hai.
+// Bahut hi conceptual question hai.
+// Long hai but samajhne wala hai.
+
+class Solution {
+public:
+    // Hum log less than 10 ,less than 20 and hundred wale ko store kiye rahenge.
+
+    // 0th index par empty string ka reason hai ki access karne me baaki sab ko easy ho aur hum zero ko to likhenge nahi.
+    const vector<string> belowTen = { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+    
+    const vector<string> belowTwenty = { "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+    // yaha bhi yehi reason hai.
+    const vector<string> belowHundred = { "", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+
+    // Main function to convert a number to English words
+    string numberToWords(int num) {
+        // Agar sirf 0 hai to usko handle karna hoga.
+        if (num == 0) {
+            return "Zero";
+        }
+        // main kaam ye wala function call kar raha hai.
+        return convertToWords(num);
+    }
+
+    // Recursive function to convert numbers to words
+    // Handles numbers based on their ranges: <10, <20, <100, <1000, <1000000, <1000000000, and >=1000000000
+    string convertToWords(int num) {
+        // 10 se kam wala.
+        if (num < 10) {
+            return belowTen[num];
+        }
+        // 20 se kam wala.
+        if (num < 20) {
+            return belowTwenty[num - 10];
+        }
+        // 100 se kam wala.
+        if (num < 100) {
+            // Agar remainder hai to uske liye bhi dekh lenge.
+            // Space se seperated hona chahiye answer.
+            return belowHundred[num / 10] + (num % 10 ? " " + convertToWords(num % 10) : "");
+        }
+        // 1000 se kam wala.
+        if (num < 1000) {
+            return convertToWords(num / 100) + " Hundred" + (num % 100 ? " " + convertToWords(num % 100) : "");
+        }
+        // Million se kam wala.
+        if (num < 1000000) {
+            return convertToWords(num / 1000) + " Thousand" + (num % 1000 ? " " + convertToWords(num % 1000) : "");
+        }
+        // Billion se kam wala.
+        if (num < 1000000000) {
+            return convertToWords(num / 1000000) + " Million" + (num % 1000000 ? " " + convertToWords(num % 1000000) : "");
+        }
+        // baaki bache hue numbers.
+        return convertToWords(num / 1000000000) + " Billion" + (num % 1000000000 ? " " + convertToWords(num % 1000000000) : "");
+    }
+};
