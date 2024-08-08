@@ -1,0 +1,44 @@
+// Spiral Matrix III (LC 885)
+
+// Pehle se padha hua tha.
+// Basically given start point se satrt karke hume clockwise rotate karte hue pura grid traverse karna hai.
+// Logic ye dikh raha hai ki pehle 1-1 step, phir 2-2 step phir 3-3 aise hi chal raha ahi.
+
+class Solution {
+public:
+    vector<vector<int>> spiralMatrixIII(int rows, int cols, int r, int c) {
+        // isi result vector me ans daalenge.
+        // Hume value nahi indexes chahiye. 
+        // Starting point to daal hi denge.
+        vector<vector<int>> res = {{r,c}};
+
+        // dx matlab rows and dy matlab column.
+        // Suru me same row me rahenge aur column 1 badhega.
+        int dx = 0,dy = 1;
+
+        // Jab tak saare elements na aa jaaye.
+        for(int n=0;res.size()<rows*cols;n++){
+            // pehle 1-1 step, phir 2-2 step phir 3-3 aise hi chal raha ahi
+            for(int i=0;i<n/2+1;i++){
+                r+=dx;
+                c+=dy;
+                // Agar valid hai to res me daal denge, nahi to skip.
+                if(r>=0 && r<rows && c>=0 && c<cols)
+                    res.push_back({r,c});
+            }
+            // dx and dy ka value aise change kar raha hai.
+            /*
+                right = (0,1) 
+                down = (1,0)
+                left = (0,-1)
+                up = (-1,0)
+                isi ko implement kar diye hai swapping ke form mein.
+            */
+            int temp = dx;
+            dx = dy;
+            dy = -temp;
+        }
+        // Last me return.
+        return res;
+    }
+};
