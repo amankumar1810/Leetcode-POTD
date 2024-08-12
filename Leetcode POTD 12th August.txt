@@ -1,0 +1,47 @@
+// k-th largest element is a stream (LC 703).
+
+// Samajh gaye hai solution iska.
+/*
+    Jab bhi k-th largest or smallest chahiye hum heap use karenge.
+    largest mein min-heap and smallest mein max-heap.
+
+    Hum yaha ye maintain karenge ki agar k-th largest element chahiye to k size
+    ke min heap mein top value hi answer hoga.
+
+    Jab bhi heap mein values k se bada hua tab hum pop kar denge.
+    Aise karte rahne se hi answer mil jaayega.
+*/
+class KthLargest {
+public:
+    // In dono ko globally define kiye hai taaki niche function mein access kar sake.
+    priority_queue<int, vector<int>, greater<int>> pq;
+    int K;
+
+    // Ye constructor hai.
+    KthLargest(int k, vector<int>& nums) {
+        K = k;
+        for (auto& num : nums) {
+            pq.push(num);
+            // k se bada hua to pop.
+            if (pq.size() > K)
+                pq.pop();
+        }
+    }
+
+    int add(int val) {
+        pq.push(val);// push in heap.
+
+        // k se bada tab pop.
+        if (pq.size() > K)
+            pq.pop();
+
+        // heap ka top hi answer hoga.
+        return pq.top();
+    }
+};
+
+/**
+ * Your KthLargest object will be instantiated and called as such:
+ * KthLargest* obj = new KthLargest(k, nums);
+ * int param_1 = obj->add(val);
+ */
