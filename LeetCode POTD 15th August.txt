@@ -1,0 +1,48 @@
+// Lemonade Change (LC 860).
+
+// 15th August ka POTD bahut Easy tha.
+/*
+    Bas thoda sa visualization hai isme.
+    Price 5rs hi hai.
+    customer 5,10 ya 20 de sakta hai.
+
+    Agar 5 diya to 5 ka 1 coin aaya aur kuch return nahi karna pada.
+    Agar 10 diya to 10 ka 1 coin aaya aur 5 ka 1 coin return karna pada.
+    Agar 20 diya tab:-
+    Ya to 5 ka 3 coin return karo
+    Ya 1 coin 5 ka aur 1 coin 10 ka return karo.
+
+    Agar return karna possible nahi hai tab false return.
+*/
+class Solution {
+public:
+    bool lemonadeChange(vector<int>& bills) {
+        int five = 0,ten = 0;// no. of coins available.
+        for(auto &value:bills){
+            if(value==5)
+                five++;
+            else if(value==10){
+                // Agar return karne ke liye 5 ka 1 coin nahi hai tab false.
+                if(five<1)
+                    return false;
+                five--;
+                ten++;
+            }
+            else if(value==20){
+                // Agar return nahi kar paa rahe hai tab false.
+                if(five<3 && (five<1 || ten<1))
+                    return false;
+                
+                // Most likely hum 5 ka coin future ke liye rakhna chaahenge.
+                // Isi liye agar 10 ka coin hai tab wahi denge.
+                if(ten>0){
+                    ten--;
+                    five--;
+                }
+                else
+                    five-=3;
+            }
+        }
+        return true;
+    }
+};
