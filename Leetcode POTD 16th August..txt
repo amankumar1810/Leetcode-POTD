@@ -1,0 +1,30 @@
+// Maximum Distances in Arrays. (LC 624).
+
+// Greedily dekhna padega ki kaun sa lene mein faayda hai.
+
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& arrays) {
+        int n = arrays.size();
+
+        // 1st array ke liye.
+        int globalMin = arrays[0][0];
+        int globalMax = arrays[0].back();
+
+        int result = 0;// Yehi return hoga.
+        for(int i=1;i<n;i++){
+            // Har array me dekhenge.
+            int localMin = arrays[i][0];
+            int localMax = arrays[i].back();
+
+            // Isse naye result mil sakte hai.
+            result = max(result,max(localMax-globalMin,globalMax-localMin));
+
+            // Updation.
+            globalMin = min(globalMin,localMin);
+            globalMax = max(globalMax,localMax);
+        }
+
+        return result;
+    }
+};
