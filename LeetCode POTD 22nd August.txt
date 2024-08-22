@@ -1,0 +1,25 @@
+// Number Complement (LC 476).
+
+class Solution {
+public:
+    // ek dum basic question hai ye.
+    // Ache se samajh lo aur yaad kar lo.
+    int findComplement(int num) {
+        // Ready-made formula hai ye, yaad kar jaao.
+        /*
+            if(num==0)
+                return 1;
+            return pow(2,floor(log2(num))+1)-1-num;
+        */
+
+        // General method hai ye.
+        int todo = num;
+        int bit = 1;
+        while(todo){
+            num = num^bit;
+            bit<<=1;
+            todo>>=1;
+        }
+        return num;
+    }
+};
