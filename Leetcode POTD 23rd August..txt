@@ -1,0 +1,76 @@
+// Fraction Addition and Subtraction. (LC 592).
+
+// Acha question tha aur samajh gaye hai isko Editorial padhkar.
+/*
+    Isme logic bas ye hai ki har baar hum log ek numerator and denominator build
+    karte jaa rahe hai.
+    Uske baad har baar total value calculate karte rahenge.
+
+    Hume simplified version me answer return karna hai.
+    Iske liye num and denom ke gcd se divide kar liye hai. 
+*/
+class Solution {
+
+// Recursive Function for GCD.
+private:
+    int FindGCD(int a,int b){
+        if(a==0)
+            return b;
+        return FindGCD(b%a,a);
+    }
+// Main Function.
+public:
+    string fractionAddition(string expression) {
+        int n = expression.size();
+        int num = 0,denom = 1;
+        // denom ko 0 nahi kar sakte hai (error se bachne ke liye).
+
+        int i=0;
+        while(i<n){
+            bool neg = false;// checking for negative.
+            // Agar symbol nahi diya hai to by default neg = false hoga.
+
+            // Agar symbol diya hai tab.
+            if(expression[i]=='-' || expression[i]=='+'){
+                // Agar - hai tab negative.
+                if(expression[i]=='-')
+                    neg = true;
+                i++;// aage badhenge
+            }
+
+            // Ab hum numerator and denominator ko build karenge
+            int currNum=0,currDenom=0;
+            while(isdigit(expression[i])){
+                int val = expression[i]-'0';
+                currNum  = currNum*10+val;
+                i++;
+            }
+            // negative tha to bana do.
+            if(neg)
+                currNum*=(-1);
+
+            // '/' wale symbol o ignorwe kiye hai.
+            i++;
+
+            // For denominator.
+            while(i<n && isdigit(expression[i])){
+                int val = expression[i]-'0';
+                currDenom = currDenom*10+val;
+                i++;
+            }
+
+            // Overall Numerator and Denominator bana liye hai.
+            // Copy par likh kar dekho, samajh jaaoge.
+            num = currNum*denom + currDenom*num;
+            denom = currDenom*denom;
+        }
+
+        // Simplified version me return karna hai.
+        // abs liye hai kyu kinum negative bhi ho sakta hai.
+        int gcd = abs(FindGCD(num,denom));
+        num/=gcd;
+        denom/=gcd;
+        // Is fashion me return karna hai anwer.
+        return to_string(num)+"/"+to_string(denom);
+    }
+};
