@@ -1,0 +1,66 @@
+// Binary Tree Postorder Traversal.
+
+// Iterative.
+
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> postorder;// answer vector
+        // Base Case.
+        if (root == NULL)
+            return postorder;
+
+        stack<TreeNode*> st;
+        TreeNode* curr = root;
+
+        /*
+            Jaha tak ho sake left me jaate rehna hai.
+            Agar ab possible nahi hai jaana tab, top wale element ke right ko dekhenge.
+            Ab right nahi tab us top element ko hi dekhenge.
+
+        */
+        while (!st.empty() || curr != NULL) {
+            // Hum as far as possible left wale ko daalte jaayenge.
+            if (curr != NULL)
+                st.push(curr), curr = curr->left;
+            // Ab agra left me nahi hai kuch tab
+            else {
+                // Right me dekhenge.
+                TreeNode* temp = st.top()->right;
+                // Agar right me kuch nahi hai tab wahi value.
+                if (temp == NULL) {
+                    temp = st.top();
+                    st.pop();
+                    postorder.push_back(temp->val);
+
+                    // Agar ye top ke right ke equal hai tab usko deal karte rahenge.
+                    while (!st.empty() && temp == st.top()->right) {
+                        temp = st.top();
+                        st.pop();
+                        postorder.push_back(temp->val);
+                    }
+                } 
+                // Ab right ke value ke liye pura operation phir se hoga.
+                else
+                    curr = temp;
+            }
+        }
+        return postorder;
+    }
+};
+
+
+// Recursive
+
+class Solution {
+public:
+    vector<int> postorder;
+    vector<int> postorderTraversal(TreeNode* root) {
+        if(!root)
+            return {};
+        postorderTraversal(root->left);
+        postorderTraversal(root->right);
+        postorder.push_back(root->val);
+        return postorder;
+    }
+};
