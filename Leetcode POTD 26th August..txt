@@ -1,0 +1,34 @@
+// LC 590 N-ary Tree Postorder Traversal.
+
+// Acha bataye the isko Naman Sir.
+/*
+    N-ary Tree mein no. of children fixed nahi hote hai.
+    Hume iske liye Null daalna padta hai har level me taaki pata chal sake ki ab ye finish hua hai.
+
+    Har root ka jitna children hai, usko daalo.
+    Stack ke kaaran LIFO hoga aur reverse karne par answer mil jaayega.
+    Dry run karne par samajh jaaoge.
+*/
+class Solution {
+public:
+    vector<int> postorder(Node* root) {
+        // Base Case.
+        if(!root)
+            return {};
+        vector<int> postorder;
+        stack<Node*> stk;
+        stk.push(root);
+        while(!stk.empty()){
+            Node *curr = stk.top();
+            stk.pop();
+            // Saare children ko daal do.
+            for(int i=0;i<curr->children.size();i++)
+                stk.push(curr->children[i]);
+            postorder.push_back(curr->val);
+        }
+
+        // Reverse karne par hi answer milega.
+        reverse(postorder.begin(),postorder.end());
+        return postorder;
+    }
+};
