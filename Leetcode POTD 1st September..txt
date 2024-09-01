@@ -1,0 +1,31 @@
+// LC 2002 Convert 1-D Array into 2-D Array.
+
+// Mission ke pehle din ki suruaat kaafi achi rahi.
+/*
+    Hume 2-D array convert karna hai.
+    1 row mein n columns hai.
+    n-solumns ka array banate jaao aur sab ko ek saath daal do vector mein.
+*/
+
+class Solution {
+public:
+    vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {
+        int sz = original.size();
+
+        // Saare elements aa jaane chahiye.
+        if(sz!=(m*n))
+            return {};
+        vector<vector<int>> ans;
+        int i=0;
+        while(i<sz){
+            int j=i;
+            vector<int> temp;
+            for(;j<(i+n);j++){
+                temp.push_back(original[j]);
+            }
+            ans.push_back(temp);
+            i=j;
+        }
+        return ans;
+    }
+};
