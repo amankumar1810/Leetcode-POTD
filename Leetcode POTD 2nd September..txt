@@ -1,0 +1,40 @@
+// LC 1894. Find the Student that Will Replace the Chalk(Medium)
+
+/*
+    Acha question hai ye.
+    Ban gaya tha khude se.
+
+    Ek tarah se circular array ki tarah treat ho raha hai.
+    Jiske aane par bhi chalf sufficient ho wo lekar aayega, uska index return hoga.
+
+    Normally TLE de dega.
+    Ye to obvious hai ki suru me sab koi normally use karte jaayenge.
+    Last mein jab total chalk pure array ke liye sufficient nahi hoga tab kisi ko laana hoga.
+*/
+class Solution {
+public:
+    int chalkReplacer(vector<int>& chalk, int k) {
+        int n = chalk.size();
+
+        // Ek round me itna chalk lag raha hai.
+        long long sum = 0;
+        for(auto &i:chalk)
+            sum+=i;
+
+        // Jitna chalk bachega ab, wo 1 complete round ke liye sufficient nahi hoga.
+        k%=sum;
+        int i = 0;
+        
+        // Ab hume isi traversal mein answer mil jaayega.
+        while(true){
+            // Jisme bhi kam hua uska index.
+            if(k<chalk[i])
+                return i;
+            k-=chalk[i];
+            i++;
+        }
+
+        // Ye kabhi arise hi nahi hoga.
+        return -1;
+    }
+};
