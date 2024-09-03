@@ -1,0 +1,35 @@
+// LC 1945. Sum of Digits of String After Convert (Easy).
+
+// bahut easy hai aaj ka.
+/*
+    Pehle sum store kar lena hai characters ka.
+    Phir k baar har digit ka sum nikaalte rehna hai.
+*/
+class Solution {
+private:
+    // Finding sum of all digits present in a string.
+    int sum(string str){
+        int ans = 0;
+        for(auto &i:str){
+            ans+=(i-'0');
+        }
+        return ans;
+    }
+public:
+    int getLucky(string s, int k) {
+        // Character ke value ko isi string mein store kiye hai.
+        string str = "";
+        for(auto &i:s){
+            // 'a' ka position 1 rakhna hai.
+            str+=to_string((i-'a'+1));
+        }
+        // K baar digits ka sum nikaalna hai.
+        while(k--){
+           int num = sum(str);
+           str = to_string(num); 
+        }
+
+        // last mein integer form mei return karna hai.
+        return stoi(str);
+    }
+};
