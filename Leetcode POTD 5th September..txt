@@ -1,0 +1,53 @@
+// LC 2028. Find Missing Observations. (Medium).
+
+// Teacher's Day special question.
+
+/*
+    n reamining numbers ko include kar lene par array ke elements ka average mean ke equal hoga.
+    Include karne par total value nikaal lenge.
+
+    Current array ka sum nikaal lenge.
+    Base case check kar lenge.
+    Aur array bana denge.
+*/
+
+class Solution {
+public:
+    vector<int> missingRolls(vector<int>& rolls, int mean, int n) {
+        int m = rolls.size();// current size.
+        int sum = 0;
+
+        // current elements ka sum.
+        for(auto &i:rolls)
+            sum+=i;
+
+        // Itna aur chahiye.
+        int req = mean*(m+n)-sum;
+
+        // minimum value ya to 1 hoga ya to 6.
+        // Agar ye voilate hua matlab array formation possible nahi hai.
+        if(req>(6*n) || req<n)
+            return {};
+
+        vector<int> ans(n);// answer vector.
+
+        int div = req/n;// itna pehle sab me daal denge.
+        int rem = req%n;// ye bacha hua rahega.
+
+        // Sab me ek common value daal diye hai.
+        for(int i=0;i<n;i++){
+            ans[i] = div;
+        }
+
+        // Kyu ki hum all possible values mein se 1 array return kar sakte hai.
+        // isi liye bache hue elements array ke starting mein 1-1 karke add kar denge.
+        int i=0;
+        while(rem>0){
+            ans[i]+=1;
+            rem--;
+            i++;
+        }
+
+        return ans;
+    }
+};
