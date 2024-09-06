@@ -1,0 +1,58 @@
+// LC 3217. Delete Nodes From Linked List Present in Array (Medium).
+
+// Mission ka aaj pehla din hai.
+/*
+    Bahut hi mehnat se bana hai ye.
+
+    Logic bahut clear hai yaha par.
+    Ek baar dry run kar lo.
+    Jiska value nums me hai, usko leave karna hai aur baaki ko lena hai.
+*/
+
+
+
+class Solution {
+public:
+    ListNode* modifiedList(vector<int>& nums, ListNode* head) {
+        // set me daal dene se checking mein ease hoga.
+        set<int> st;
+        for (auto& i : nums)
+            st.insert(i);
+
+        ListNode *temp = head, *temp1 = head, *temp2 = head;
+        bool flag = true;// 1st node ke liye ye kaam karega.
+        while (temp2 != NULL) {
+            // Agar value set me hai matlab chhorna hai.
+            if (st.find(temp2->val) != st.end()) {
+                /*
+                    Agar starting wale values ko leave karna hai tab sab ko aage lete jaayenge.
+                */
+                if (flag == true) {
+                    temp = temp->next;
+                    temp1 = temp1->next;
+                    temp2 = temp2->next;
+                } 
+                // nahi to us value ko leave karo aur doosre ko dekho.
+                else {
+                    temp1->next = NULL;// isse aage aane wale value ko add karne me ease hoga.
+                    temp2 = temp2->next;
+                }
+            } 
+            //Agar value set me nahi hai tab usko consider karna hai.
+            else {
+                // Agar ye 1st value hai,
+                if (flag == true) {
+                    temp2 = temp2->next;
+                    
+                } else {
+                    temp1->next = temp2;
+                    temp1 = temp2;
+                    temp2 = temp2->next;
+                    
+                }
+                flag = false;// ek baar koi value consider ho gaya to temp ab fix ho jaayega.
+            }
+        }
+        return temp;
+    }
+};
