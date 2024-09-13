@@ -1,0 +1,47 @@
+// LC 1310. XOR Queries of a Subarray (Medium).
+
+// Bahut hi easy question hai ye.
+// Ek hi baar mein ban gaya tha POTD mein.
+
+/*
+    Normallly agar har query ke liye pura compute kare to TLE dega.
+
+    Thoda pre-computation karna padega isme.
+    Hum prefix-sum jaisa prefix-xor array bana lete hai.
+
+    Ab har query ke liye solve karenge.
+*/
+class Solution {
+public:
+    vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
+        int n = arr.size();
+        int xorval = 0;
+
+        // XOR array bana liye hai.
+        vector<int> nums(n);
+        for(int i=0;i<n;i++){
+            xorval^=arr[i];
+            nums[i] = xorval;
+        }
+
+        int sz = queries.size();
+        vector<int> ans(sz);
+        int k=0;    // index access mein kaam aayega.
+        for(int i=0;i<sz;i++){
+            int first = queries[i][0];
+            int second = queries[i][1];
+
+            // iska matlab suru se last tak sabka xor nikaalna hai.
+            if(first==0)
+                ans[k++] = nums[second];
+
+            // 2 points ke bich nikaalna hai.
+            // Pichle wale se xor karke answer nikaal lenge.
+            else
+                ans[k++] = nums[second]^nums[first-1];
+        }
+
+        // Final Answer Vector.
+        return ans;
+    }
+};
