@@ -1,0 +1,40 @@
+// LC 2419. Longest Subarray With Maximum Bitwise AND (Medium).
+
+// Hint padhkar strike kar gaya.
+/*
+    Hume maximum subarray length nikaalna hai jisme AND value maximum aaye.
+    AND thoda different hota hai as comparison to OR.
+
+    Do value ka AND humesha largest value ke equal ya usse small hi hoga.
+    Equality will hold when both numbers are equal.
+
+    Maximum AND usi number ka hoga jo maximum hoga array mein.
+    Agar maximum value maangta to direct maximum value return kar dete.
+
+    But hume maximum length nikaalna hai.
+    Ye to pakka clear hai ki maximum AND ka value max value ke equal hi hoga.
+
+    Ab dekhna hai ki maximum value wala kitna element ek saath present hai.
+    Beech mein koi different element nahi aana chahiye.
+*/
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int n = nums.size();
+
+        // MAximum element in array.
+        int maxi = *max_element(nums.begin(),nums.end());
+        int i=0;
+        int cnt=0;      // Kitni baar hai wo lagaatar.
+        int ans = 0;    // Final answer.
+        while(i<n){
+            if(nums[i]==maxi)
+                cnt++;
+            else    // discontinue nahi hona chahiye.
+                cnt = 0;
+            ans = max(ans,cnt);
+            i++;
+        }
+        return ans;
+    }
+};
