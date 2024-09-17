@@ -1,0 +1,43 @@
+// LC 884. Uncommon Words from Two Sentences(Easy).
+
+// Viswakarma Puja Special.
+/*
+    Sabhi words ko map me daal do.
+    Jinki freq. 1 hai wahi answer hai.
+*/
+class Solution {
+public:
+    vector<string> uncommonFromSentences(string s1, string s2) {
+        map<string,int> mp;
+        int i=0;
+        string temp = "";
+        while(i<s1.size()){
+            if(s1[i]!=' ')
+                temp+=s1[i];
+            else{
+                mp[temp]++;
+                temp = "";
+            }
+            i++;
+        }
+        mp[temp]++;
+        i=0;
+        temp = "";
+        while(i<s2.size()){
+            if(s2[i]!=' ')
+                temp+=s2[i];
+            else{
+                mp[temp]++;
+                temp = "";
+            }
+            i++;
+        }
+        mp[temp]++;
+        vector<string> ans;
+        for(auto &i:mp){
+            if(i.second==1)
+                ans.push_back(i.first);
+        }
+        return ans;
+    }
+};
