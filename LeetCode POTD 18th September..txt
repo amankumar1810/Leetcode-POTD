@@ -1,0 +1,28 @@
+// LC 179. Largest Number (Medium).
+
+class Solution {
+public:
+    // GFG wala same question hai.
+
+    static bool comp(string a,string b){
+        return (a+b)>(b+a);
+    }
+    string largestNumber(vector<int>& nums) {
+        vector<string> ans(nums.size());
+        for(int i=0;i<nums.size();i++)
+            ans[i] = to_string(nums[i]);
+
+        sort(ans.begin(),ans.end(),comp);
+        string res="";
+        for(auto &i:ans)
+            res+=i;
+
+        // ek edge case handle karna hai.
+        // agar sirf zero hi ho to array me suru se ant tak sab 0 hoga.
+        // aise me sirf ek hi 0 return karo.
+        
+        if(res[0]=='0')
+            return "0";
+        return res;
+    }
+};
