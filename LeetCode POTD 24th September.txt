@@ -1,0 +1,40 @@
+// LC 3043. Find the Length of the Longest Common Prefix (Medium).
+
+// bahut hi basic Approach se bana hai ye question.
+/*
+    Isme hume longest prefix nikaalna hai arr1 and arr2 se.
+    Hum ek set mein arr1 ke elements ka saara possible prefix store kar lenge.
+
+    Prefix nikaalne ke liye har baar 10 se divide de diye hai.
+*/
+class Solution {
+public:
+    int longestCommonPrefix(vector<int>& arr1, vector<int>& arr2) {
+        set<int> arr1prefix;
+
+        // Saara possible prefix arr1 se.
+        for(auto &i:arr1){
+            while(i>0){
+                arr1prefix.insert(i);
+                i/=10;
+            }
+        }
+        int ans = 0;
+        // Ab maximum length nikaal lenge arr2 se.
+        for(auto &i:arr2){
+            // Jab tak possible prefix naa mile tab tak reduce karte jaao.
+            while(i>0 && arr1prefix.find(i)==arr1prefix.end())
+                i/=10;
+
+            // Agar i>0 hai tabhi prefix milne par while loop break hua hai.
+            // Tab hum length nikaal liye hai.
+            if(i>0){
+                // length ke liye hum log10 ka use kiye hai.
+                // eg = log10(100)=2 but length = 3 hai.
+                // isi liye log10 ke baad +1 kiye hai.
+                ans = max(ans,static_cast<int>(log10(i)+1));
+            }
+        }
+        return ans;
+    }
+};
