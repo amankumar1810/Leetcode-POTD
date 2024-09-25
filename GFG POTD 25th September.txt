@@ -1,0 +1,43 @@
+// Palindrome Linked List(Medium).
+
+class Solution {
+  public:
+    // reverse karne ka basic code.
+    Node* reverse(Node *head){
+        Node *p = NULL,*q=NULL;
+        while(head!=NULL){
+            q = p;
+            p = head;
+            head = head->next;
+            p->next = q;
+        }
+        return p;
+    }
+    
+    bool isPalindrome(Node* head) {
+
+        // Base case = (0 node or 1 node)
+        if(head==NULL || head->next==NULL)
+            return true;
+
+        // Slow-Fast ke help se middle me jaayenge.
+        Node *slow = head,*fast = head;
+        while(fast->next!=NULL && fast->next->next != NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        // List ko half se reverse kar denge.
+        slow->next = reverse(slow->next);
+
+        // Ab slow aur head ka comparison kar lenge.
+        slow = slow->next;
+        while(slow!=NULL){
+            if(slow->data!= head->data)
+                return false;
+            slow = slow->next;
+            head = head->next;
+        }
+        return true;
+    }
+};
