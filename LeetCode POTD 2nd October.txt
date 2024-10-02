@@ -1,0 +1,42 @@
+// 1331. Rank Transform of an Array (Easy)
+
+// Easy hai ye Question but thoda sa statement twisted tha.
+// Editorial se logic padhna pada.
+
+/*
+    Ek doosra array banakar usko sort kar liye hai.
+    Phir 1 se start karte hue har element ko rank assign kar diye hai.
+
+    Phir arr ke element ko rank se replace kar diye hai.
+*/
+class Solution {
+public:
+    vector<int> arrayRankTransform(vector<int>& arr) {
+        int n = arr.size();
+
+        // Edge Case.
+        if(n==0)
+            return {};
+        vector<int> temp = arr;
+        sort(temp.begin(),temp.end());
+
+        // 1 se start hoga rank.
+        int rank = 1;
+        unordered_map<int,int> mp;
+
+        // 1st element ka Rank = 1.
+        mp[temp[0]] = rank;
+        for(int i=1;i<n;i++){
+            // rank tab hi increase hoga jab value previous se jyada hoga.
+            if(temp[i]>temp[i-1])
+                rank++;
+            mp[temp[i]] = rank;
+        }
+
+        // Same array mein hi rank update kar diye hai.
+        for(int i=0;i<n;i++){
+            arr[i] = mp[arr[i]];
+        }
+        return arr;
+    }
+};
