@@ -1,0 +1,36 @@
+// LC 2491. Divide Players Into Teams of Equal Skill (Medium)
+
+/*
+    Logic ye use kiye hai ki sort karke dono side se 1-1 element select kar lenge.
+    Har team ka equally score hona chahiye jo totalSum/no.of teams hoga.
+    Agar sum required value ke equal nahi hai to team successfully nahi ban paayega.
+*/
+class Solution {
+public:
+    long long dividePlayers(vector<int>& skill) {
+        int sz = skill.size();
+        int totalTeams = sz/2;// size/2 teams possible.
+        int totalSum=0;
+        for(auto &i:skill)
+            totalSum+=i;
+
+        // Agar sum possible na ho divide kar paane mein equally then false.
+        if(totalSum%totalTeams)
+            return -1;
+        
+        // Har team ko equally divide karne ke liye each team mein itna value hona chahiye.
+        int eachTeamValue = totalSum/totalTeams;
+        
+        sort(skill.begin(),skill.end());
+        int i=0,j=sz-1;
+        long long required = 0;
+        while(i<j){
+            if(skill[i]+skill[j]!=eachTeamValue)
+                return -1;
+            required += (long long)(skill[i]*skill[j]);
+            i++;
+            j--;
+        }
+        return required;
+    }
+};
