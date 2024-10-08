@@ -1,0 +1,32 @@
+// LC 1963. Minimum Number of Swaps to Make the String Balanced(Medium)
+
+/*
+    Hume isme unbalanced wale ko manage karna hai.
+    Yaha ek swap se 2 brackets balance ho rahe hai.
+    Dhyaan dena hai ki jo unbalanced hai usi ko balance karna hai,
+    baaki ko consider nahi karenge.
+*/
+class Solution {
+public:
+    int minSwaps(string s) {
+        int unbalanced = 0;
+        stack<char> stk;
+        for(auto &i:s){
+            // opening mila closing se pehle to balanced hai.
+            if(i=='[')
+                stk.push(i);
+            // agar closing mil raha hai to may be unbalanced ho.
+            else{
+                // agar opening se pehle closing aa gaya matlab unbalanced.
+                if(stk.empty())
+                    unbalanced++;
+                // Nahi to balanced hi hai, aur pop kar denge.
+                else
+                    stk.pop();
+            }
+        }
+        // Yaha ek swap se 2 brackets balance ho rahe hai.
+        // isi formula se answer aayega. 
+        return (unbalanced+1)/2;
+    }
+};
