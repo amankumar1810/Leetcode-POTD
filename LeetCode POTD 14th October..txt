@@ -1,0 +1,29 @@
+// LC 2530. Maximal Score After Applying K Operations(Medium)
+
+// Bahut hi Easy Question hai ye to.
+// har baar maximum element lena hai aur usko answer me add kar dena hai.
+// phir usko ceil(n/3) se replace karna hai.
+// total k baar operation hoga.
+
+class Solution {
+public:
+    long long maxKelements(vector<int>& nums, int k) {
+        long long ans = 0;
+
+        // maximum element ke access ke liye pq best hai.
+        priority_queue<int> pq;
+        for (auto& i : nums)
+            pq.push(i);
+
+        while (k--) {
+            int temp = pq.top();
+            ans += temp;
+            pq.pop();
+            // ceil wala yaad rakhna.
+            pq.push(ceil(temp/3.0));
+        }
+        
+        // Final Answer.
+        return ans;
+    }
+};
