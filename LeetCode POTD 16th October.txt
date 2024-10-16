@@ -1,0 +1,63 @@
+// LC 1405. Longest Happy String (Medium).
+
+// Bahut acha question hai ye.
+// Bahut karib the hum, phir bhi nahi bana.
+
+/*
+    Basically hume jyada freq. wale ko pehle daalna hai.
+    Hume consecutive 3 same se bachna hai.
+*/
+class Solution {
+public:
+    string longestDiverseString(int a, int b, int c) {
+        string ans = "";
+        priority_queue<pair<int,char>> pq;  // isse jyda freq. wala aage aa jaayega.
+
+        // agar freq. >0 tabhi wo consider hoga.
+        if(a>0)
+            pq.push({a,'a'});
+        if(b>0)
+            pq.push({b,'b'});
+        if(c>0)
+            pq.push({c,'c'});
+
+
+        while(!pq.empty()){
+            pair<int,char> temp1 = pq.top();
+            pq.pop();
+            int count = temp1.first;
+            char character = temp1.second;
+
+            // yaha 3 consecutive dekh rahe hai hum.
+            // agar same ho raha hai to hum doosra character ko use karnege.
+            if(ans.size()>=2 && ans[ans.size()-1]==character && ans[ans.size()-2]==character){
+                // Agar koi nahi bacha hai tab break.
+                if(pq.empty())
+                    break;
+
+                // warna usko use karenge.
+                pair<int,char> temp2 = pq.top();
+                pq.pop();
+                ans+=temp2.second;
+
+                // freq. kam karke daal denge waapas.
+                if(temp2.first-1>0)
+                    pq.push({temp2.first-1,temp2.second});
+            }
+
+            // warna usi ko daalenge.
+            else{
+                ans+=character;
+                count--;
+            }
+
+
+            // Har baar hum popped element ko waapas daalenge.
+            if(count>0)
+                pq.push({count,character});
+        }
+
+        // Final Answer.
+        return ans;
+    }
+};
