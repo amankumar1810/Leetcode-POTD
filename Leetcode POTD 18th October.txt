@@ -1,0 +1,40 @@
+// LC 2044. Count Number of Maximum Bitwise-OR Subsets (Medium).
+
+// ChatGPT se seekhe hai.
+// Ek dum standard Backtracking ka question hai ye.
+
+/*
+    Hume maximum OR nikaalna hai aur kitne subset ka OR iske equal hai wo count karna hai.
+    Maximum OR pure array ka OR hoga.
+
+    Ab take and not-take karke answer calculate kar lenge.
+*/
+class Solution {
+private:    
+    void backtrack(int idx,int currOR,vector<int> &nums,int maxOR,int &ans){
+        // Base case - Agar last index par aa gaye to return karna hoga.
+        // Agar total OR maximum ke equal hua to ans++ nahi to nahi.
+        if(idx==nums.size()){
+            if(currOR == maxOR)
+                ans++;
+            return;
+        }
+
+        // take case - iska bhi OR include hoga.
+        backtrack(idx+1,currOR|nums[idx],nums,maxOR,ans);
+
+        // not-take case - iska OR include nahi hoga.
+        backtrack(idx+1,currOR,nums,maxOR,ans);
+    }
+
+public:
+    int countMaxOrSubsets(vector<int>& nums) {
+        int maxOR = 0;
+        for(auto &i:nums)   // Maximum OR = OR of complete array.
+            maxOR|=i;
+
+        int ans = 0;
+        backtrack(0,0,nums,maxOR,ans);// ans by reference paas hua hai.
+        return ans;
+    }
+};
