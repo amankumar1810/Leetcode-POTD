@@ -1,0 +1,54 @@
+// LC 2583. Kth Largest Sum in a Binary Tree (Medium)
+
+// Khud se ban gaya ye question puri tarah se.
+/*
+    Iske liye 3 concept aana chahiye :-
+    Height of Binary Tree, BFS, k-th largest element.
+    
+*/
+class Solution {
+private:    
+    int height(TreeNode* root){
+        if(!root)
+            return 0;
+        int left = height(root->left);
+        int right = height(root->right);
+        return 1+max(left,right);
+    }
+public:
+    long long kthLargestLevelSum(TreeNode* root, int k) {
+        if(!root)
+            return 0;
+
+        // agar height se kam level hai to -1 return karna hai.
+        int hei = height(root);
+        if(hei<k)
+            return-1;
+        
+        // minheap for k-th largest element
+        priority_queue<long long,vector<long long>,greater<long long>> pq;
+
+        // BFS apply karke har level ka sum nikaal le rahe hai.
+        queue<TreeNode *> q;
+        q.push(root);
+        while(!q.empty()){
+            int sz = q.size();
+            long long sum = 0;
+            for(int i=0;i<sz;i++){
+                TreeNode *curr = q.front();
+                q.pop();
+                if(curr->left)
+                    q.push(curr->left);
+                if(curr->right)
+                    q.push(curr->right);
+                sum+=curr->val;
+            }
+            pq.push(sum);
+            if(pq.size()>k)
+                pq.pop();
+        }
+
+        // k-th largest element.
+        return pq.top();
+    }
+};
