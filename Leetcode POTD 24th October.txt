@@ -1,0 +1,26 @@
+// LC 951. Flip Equivalent Binary Trees (Medium).
+
+class Solution {
+public:
+    bool flipEquiv(TreeNode* root1, TreeNode* root2) {
+        
+        // base case
+        if (!root1 && !root2)
+            return true;
+        
+        // yahi false return karo
+        if ((root1 == NULL && root2 != NULL) ||
+            (root1 != NULL && root2 == NULL) || root1->val != root2->val)
+            return false;
+        
+        // kisi particular node par dono ka left subtree flip eq. ho aur right subtree bhi flip eq. ho.
+        // ya kisi particular node par ek ka left dusre ke right se flip eq. ho jaaye.
+        // dono me se koi ek hi hoga saath me dono thodi na hoga
+        // isi liye beech me OR hai.
+        
+        return (flipEquiv(root1->left, root2->left) &&
+                flipEquiv(root1->right, root2->right)) ||
+               (flipEquiv(root1->left, root2->right) &&
+                flipEquiv(root1->right, root2->left));
+    }
+};
