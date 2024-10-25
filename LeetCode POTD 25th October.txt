@@ -1,0 +1,46 @@
+// LC 1233. Remove Sub-Folders from the Filesystem (Medium)
+
+// PlaceWit ka karaya hua question hai ye.
+/*  
+    Isme basically hume sirf main folders ko rakhna hai aur sub-folders ko remove kar dena hai.
+    Iske liye sorting method ka use kiye hai.
+
+    String Compare GFG se padh lo ki kaise do string ko compare kiye jaata hai.
+    Isme ek string aur ek substring ka comparison hua hai.
+
+    Agar koi string naya hai to hi usko add kiya gaya hai answer vector mein.
+*/
+class Solution {
+public:
+    vector<string> removeSubfolders(vector<string>& folder) {
+        vector<string> ans; // yahi return hoga.
+        int n = folder.size();
+
+        // Sort karne se order me aa jaayega, jisse hume child and parent identifiaction me ease hogi.
+        sort(folder.begin(),folder.end());
+
+        // ye obvious hai ki 1st string to aayega hi kyu ki uska koi parent nahi hoga.
+        ans.push_back(folder[0]);
+
+        /*
+            Ab yaha par har string ko last inserted string se compare kar rahe hai
+            Aur pata kar rahe hai ki kahi wo iska parent to nahi.
+
+            eg = /a/b ka parent hoga /a.
+
+        */
+        for(int i=1;i<n;i++){
+            string last = ans.back();
+
+            // ye daalne se hi compare ho paayega pattern kyu may be /ab ho jaaye kisi mein to wo parent nahi na hoga.
+            last+='/'; 
+
+            // ==0 matlab same hai (parent hai) 
+            if(folder[i].compare(0,last.size(),last)!=0)
+                ans.push_back(folder[i]);
+        }
+
+        // Final Answer.
+        return ans;
+    }
+};
