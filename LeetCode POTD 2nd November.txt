@@ -1,0 +1,34 @@
+// LC 2490. Circular Sentence (Easy).
+
+// Bahut hi easy question tha, ek hi baar mein ban gaya.
+/*
+    Isme basically jab bhi space mile to uske aage aur piche ke letters ko check kar lena hai.
+    Wo dono same hone chahiye circular ke liye.
+
+    1st and last ko seperately deal kar lena hai.
+*/
+
+class Solution {
+public:
+    bool isCircularSentence(string sent) {
+        int n = sent.size();
+
+        // 1st and last.
+        if(sent[0]!=sent[n-1])
+            return false;
+
+        int i=0,j=0;
+        int k=0;
+        while(k<n){
+            // Jab bhi space mile tab.
+            if(sent[k]==' '){
+                i = k-1;
+                j = k+1;
+                if(sent[i]!=sent[j])
+                    return false;
+            }
+            k++;
+        }
+        return true;
+    }
+};
