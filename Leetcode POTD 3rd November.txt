@@ -1,0 +1,17 @@
+// LC 796. Rotate String(Easy).
+
+// Isko Sir bataye the Math string section ke discussion mein.
+class Solution {
+public:
+    // Hum left ya right dono shift kar sakte hai.
+    bool rotateString(string s, string goal) {
+        // Agar size hi same nahi hai to pakkka false
+        if(s.size()!=goal.size())
+            return false;
+        // String me wahi string ad kar denge
+        // Ab is bare waale string me find karenge
+        // Agar mil gaya to pakka present hoga.
+        s+=s;
+        return (s.find(goal)!=-1);
+    }
+};
