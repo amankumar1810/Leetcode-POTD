@@ -1,0 +1,39 @@
+// LC 1574. Shortest Subarray to be Removed to Make Array Sorted(Medium).
+
+// Isko ache se samajh gaye hai hum Editorial se.
+/*
+    Isme hume left and right sorted subarray nikaalna hai.
+    Beech me ek part aisa hoga jo order mein nahi hoga usko remove karna hai.
+
+    Ab dono part ko merge karne ke liye ye ensure hona chahiye ki dono part
+    sorted ban jaaye.
+
+    Hum left subarray ka prefix and right subarray ka suffix lenge isme.
+    Minimum answer return karna hai.
+*/
+
+class Solution {
+public:
+    int findLengthOfShortestSubarray(vector<int>& arr) {
+        int n = arr.size();
+        int right = n-1;
+
+        // Finding right sorted subarray.
+        while(right>0 && arr[right-1]<=arr[right])
+            right--;
+
+        int ans = right;
+        int left = 0;
+
+        // left mein suitable array finding.
+        while(left<right && (left==0 || arr[left-1]<=arr[left])){
+            // Agar left ka value right ke starting se bada ho jaaye to right ko aage badhaayenge.
+            // kyu ki right subarray sorted hai to aage bada value milega hume. 
+            while(right<n && arr[left]>arr[right])
+                right++;
+            ans = min(ans,right-left-1);
+            left++;
+        }
+        return ans;
+    }
+};
