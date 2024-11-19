@@ -1,0 +1,48 @@
+// LC 2461. Maximum Sum of Distinct Subarrays With Length K (Medium).
+
+// Easy question, ek hi attempt mein khud se ban gaya ye.
+/*
+    Isme basically k length ka waisa subarray find karna hai jisme saare elements unique ho,
+    Hume unka sum return karna hai.
+
+    Normal Approach use kiye hai :-
+    Pehle k length ke liye check kar liye hai.
+    Phir normal Sliding Window ka application.
+
+*/
+class Solution {
+public:
+    long long maximumSubarraySum(vector<int>& nums, int k) {
+        int n = nums.size();
+        unordered_map<int,int> mp;
+        long long sum = 0;
+
+        // For first k-length.
+        for(int i=0;i<k;i++){
+            sum+=nums[i];
+            mp[nums[i]]++;
+        }
+        long long ans = 0;
+        if(mp.size()==k)    // Checking all unique elements.
+            ans = sum;
+
+        // Sliding Window Start.
+        int i = 0,j=k;
+        while(j<n){
+            sum -= nums[i];
+            mp[nums[i]]--;
+
+            // For zero-frequency.
+            if(mp[nums[i]]==0)
+                mp.erase(nums[i]);
+            i++;
+            sum += nums[j];
+            mp[nums[j]]++;
+            // Checking all unique elements.
+            if(mp.size()==(j-i+1))
+                ans = max(ans,sum);
+            j++;
+        }
+        return ans;
+    }
+};
