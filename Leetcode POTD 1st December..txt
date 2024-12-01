@@ -1,0 +1,25 @@
+// LC 1346. Check If N and Its Double Exist(Easy).
+
+// Best Approcah yahi hai.
+/*
+    Isme set me daal kar dekh lenge ki answer mil raha hai ki nahi.
+*/
+class Solution {
+public:
+    bool checkIfExist(vector<int>& arr) {
+        set<int> st;
+        for(int &i:arr){
+            // agar double mil gaya tab.
+            if(st.find(2*i)!=st.end())
+                return true;
+            
+            // agar even hai tab hi uska half check karenge.
+            if(i%2==0){
+                if(st.find(i/2)!=st.end())
+                    return true;
+            }
+            st.insert(i);
+        }
+        return false;
+    }
+};
