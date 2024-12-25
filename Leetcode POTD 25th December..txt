@@ -1,0 +1,45 @@
+// LC 515. Find Largest Value in Each Tree Row(Medium).
+
+// Khud se banaaye hai isko.
+/*
+    Level order traversal nikaal liye hai.
+    Har level ka maximum value store karaate gaye hai.
+    Ek check lagaaye hai ki value update hua hai ki nahi.
+*/
+class Solution {
+public:
+    vector<int> largestValues(TreeNode* root) {
+        // Base case.
+        if(!root)
+            return {};
+        vector<int> ans;
+        ans.push_back(root->val);
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int n = q.size();
+            int maxi = INT_MIN;
+            bool flag = false;  // update ko check karne ke liye.
+            for(int i=0;i<n;i++){
+                TreeNode *curr = q.front();
+                q.pop();
+                if(curr->left){
+                    q.push(curr->left);
+                    maxi = max(maxi,curr->left->val);
+                    flag = true;
+                }
+                if(curr->right){
+                    q.push(curr->right);
+                    maxi = max(maxi,curr->right->val);
+                    flag = true;
+                }
+            }
+            // INT_MIN ko hi daalne se bachne ke liye.
+            if(flag==true)
+                ans.push_back(maxi);
+            // kyuki yaha node ka value INT_MIN bhi ho sakta hai, 
+            // to usko bhi include karne ke liye hum !=INT_MIN nahi lagaaye hai.
+        }
+        return ans;
+    }
+};
