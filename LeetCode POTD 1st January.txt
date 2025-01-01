@@ -1,0 +1,34 @@
+// LC 1422. Maximum Score After Splitting a String(Easy).
+
+// New Year 2025 ka 1st POTD solved.
+/*
+    0's in left and 1's in right.
+    Hume non-empty banana hai.
+
+    Basically hum total ones find kar liye hai.
+    Ab n-1 tak mein 0's and 1's count karenge aur accordingly dekh lenge
+    ki maximum answer kya aayega.
+*/
+class Solution {
+public:
+    int maxScore(string s) {
+        int n = s.size();
+        int ones = 0;   // total 1's in string.
+        for(int i=0;i<n;i++){
+            if(s[i]=='1')
+                ones++;
+        }
+        int ans = 0;
+        int zero_cnt = 0,one_cnt = 0;   // While traversing.
+        for(int i=0;i<n-1;i++){// n-1 kyuki dono non-empty hona chahiye.
+            if(s[i]=='0')
+                zero_cnt++;
+            else if(s[i]=='1')
+                one_cnt++;
+            // kyu ki ones agar 1st mein aa gaye to wo 2nd mein add nahi ho paayega.
+            int curr = zero_cnt+(ones-one_cnt);
+            ans = max(ans,curr);
+        }
+        return ans;
+    }
+};
