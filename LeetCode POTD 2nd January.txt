@@ -1,0 +1,51 @@
+// LC 2559. Count Vowel Strings in Ranges(Medium).
+
+// Khud se solve kar liye hai isko.
+/*
+    Basically hume Queries se deal karna hai to hum nested for-loop ka use nahi kar sakte.
+    Iske liye hum Prefix Array banaye hai jo abhi tak ka answer store kiya hua hai.
+
+    Ab queries par chala kar answer nikaal liye hai.
+*/
+class Solution {
+private:
+    // Checking valid word.
+    bool validate(string str) {
+        int n = str.size();
+        if ((str[0] == 'a' || str[0] == 'e' || str[0] == 'i' || str[0] == 'o' ||
+             str[0] == 'u') &&
+            (str[n - 1] == 'a' || str[n - 1] == 'e' || str[n - 1] == 'i' ||
+             str[n - 1] == 'o' || str[n - 1] == 'u'))
+            return true;
+        return false;
+    }
+
+public:
+    vector<int> vowelStrings(vector<string>& words,
+                             vector<vector<int>>& queries) {
+        int n = queries.size();
+        int sz = words.size();
+
+        vector<int> ans(n);
+        vector<int> prefix(sz); // Prefix Array.
+        int init = validate(words[0]);
+        // cout<<init<<endl;
+        prefix[0] = init;
+        for (int i = 1; i < sz; i++) {
+            int temp = validate(words[i]);
+            prefix[i] = prefix[i - 1] + temp;
+        }
+        for(auto &i:prefix)
+            cout<<i<<" ";
+        cout<<endl;
+        for(int i=0;i<n;i++){
+            int t1 = queries[i][0],t2 = queries[i][1];
+            // Isko alag se deal karte hai.
+            if(t1==0)
+                ans[i] = prefix[t2];
+            else
+                ans[i] = prefix[t2]-prefix[t1-1];
+        }
+        return ans;
+    }
+};
