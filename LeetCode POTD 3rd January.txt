@@ -1,0 +1,28 @@
+// LC 2270. Number of Ways to Split Array(Medium).
+
+// Khud se ban gaya, wo bhi first glance mein.
+/*
+    Equilibrium point wala logic hai.
+    Left sum ka value right sum se greater ya equal hona chahiye.
+
+    Agar hai to count karte chalo.
+*/
+class Solution {
+public:
+    int waysToSplitArray(vector<int>& nums) {
+        int n = nums.size();
+        int ans = 0;
+        long sum = 0;
+        for (int& i : nums) // Total Sum.
+            sum += i;
+        long left_sum = 0, right_sum = 0;
+        for (int i = 0; i < n - 1; i++) {
+            left_sum += nums[i];
+            right_sum = sum - left_sum; 
+            // Isi formula ka use hoga, equilibrium point wala nahi.
+            if (left_sum >= right_sum)
+                ans++;
+        }
+        return ans;
+    }
+};
