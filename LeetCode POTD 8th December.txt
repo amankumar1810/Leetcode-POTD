@@ -1,0 +1,53 @@
+// LC 3042. Count Prefix and Suffix Pairs I(Easy).
+
+// Easy question hai, ek hi baar mein ban gaya.
+/*
+    Bas implementation ka dhyaa dena hai.
+    Hume check karna hai ki Prefix and Suffix dono hai ki nahi.
+
+    Hum sort nahi kar sakte, aisa diya hai Question mein.
+*/
+class Solution {
+private:
+    bool isPrefix(string a, string b) {
+        int n1 = a.size(), n2 = b.size();
+        if(n1>n2)   // base Case(Prefix ho hi nahi sakta.)
+            return false;
+        int i = 0, j = 0;
+        while (i < n1) {
+            if (a[i] == b[j]) {
+                i++;
+                j++;
+            } else
+                return false;
+        }
+        return true;
+    }
+    bool isSuffix(string a, string b) {
+        int n1 = a.size(), n2 = b.size();
+        if(n1>n2)
+            return false;
+        int i = n1 - 1, j = n2 - 1;
+        while (i >= 0) {
+            if (a[i] == b[j]) {
+                i--;
+                j--;
+            } else
+                return false;
+        }
+        return true;
+    }
+
+public:
+    int countPrefixSuffixPairs(vector<string>& words) {
+        int n = words.size();
+        int ans = 0;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (isPrefix(words[i], words[j]) && isSuffix(words[i], words[j]))
+                    ans++;
+            }
+        }
+        return ans;
+    }
+};
