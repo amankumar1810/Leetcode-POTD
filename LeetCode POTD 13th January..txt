@@ -1,0 +1,38 @@
+// LC 3223. Minimum Length of String After Operations(Medium).
+
+// Bahut badhiya logic khud se strike kiya hai humko aaj POTD mein.
+/*
+    Basically yaha par bol raha hai ki kisi character ko select karo
+    jo usse pehle bhi aa chuka ho aur baad mein bhi aayega.
+    Ab pehle aur baad wale ko delete kar do.
+
+    Yaha logic ye hai iske liye at least 3 character hone hi chahiye.
+    Agar ye even freq. hua to baaki delete hoga aur 2 bach jaayega.
+    Agar ye odd freq. hua to baaki delete hoga aur 1 bach jaayega.
+
+    Isi ko implement kar do.
+*/
+class Solution {
+public:
+    int minimumLength(string s) {
+        int n = s.size();
+        vector<int> freq(26);
+        for(char &ch:s)
+            freq[ch-'a']++;
+
+        int ans = 0;
+        for(int i=0;i<26;i++){
+            // 3 se kam mein deletion possible nahi hai.
+            if(freq[i]<=2)
+                ans+=freq[i];
+            else{
+                // Even and odd ka dekh lo.
+                if(freq[i]%2==0)
+                    ans+=2;
+                else
+                    ans+=1;
+            }
+        }
+        return ans;
+    }
+};
