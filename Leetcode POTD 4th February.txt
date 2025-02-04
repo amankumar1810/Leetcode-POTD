@@ -1,0 +1,26 @@
+// LC 1800. Maximum Ascending Subarray Sum(Easy).
+
+// Ek dum basic question hai ye.
+/*
+    kadane's Algorithm use kar lena hai.
+    Agar strictly increasing milta jaa raha hai to add karte jaao.
+    Warna reset kar do sum.
+
+    Har baar maxm nikaalte raho.
+*/
+class Solution {
+public:
+    int maxAscendingSum(vector<int>& nums) {
+        int n = nums.size();
+        int ans = nums[0];
+        int sum = nums[0];
+        for(int i=1;i<n;i++){
+            if(nums[i]>nums[i-1])
+                sum+=nums[i];
+            ans = max(ans,sum);
+            if(nums[i]<=nums[i-1])
+                sum = nums[i];
+        }
+        return ans;
+    }
+};
