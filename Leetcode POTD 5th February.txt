@@ -1,0 +1,38 @@
+// LC 1790. Check if One String Swap Can Make Strings Equal(Easy).
+
+// Khud se ek bhi baar mein bana hai.
+/*
+    Freq. same hona chahiye.
+    Deviataion hua bhi hai to bas 1 jagah hona chahiye.
+*/
+class Solution {
+private:
+    // Checking freq.
+    bool isSameCharacters(string s1, string s2){
+        vector<int> v1(26);
+        for(char &i:s1)
+            v1[i-'a']++;
+        for(char &i:s2)
+            v1[i-'a']--;
+        for(int i=0;i<26;i++){
+            if(v1[i]!=0)
+                return false;
+        }
+        return true;
+    }
+public:
+    bool areAlmostEqual(string s1, string s2) {
+        if(s1==s2)  // Already same
+            return true;
+        int n = s1.size();
+        if(isSameCharacters(s1,s2)==false)  // freq. hi same nahi hai to convert kaise hoga.
+            return false;
+        int cnt = 0;
+        for(int i=0;i<n;i++){
+            if(s1[i]!=s2[i])
+                cnt++;
+        }
+        // Bas 1 hi baar swap mein possible hai cahnge karna.
+        return cnt==2;
+    }
+};
