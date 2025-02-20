@@ -1,0 +1,26 @@
+// LC 1980. Find Unique Binary String(Medium).
+
+// Bahut dino baad aaj Placement ke baad koi question samajh ke submit kiye hai.
+/*
+    Logic ye hai ki koi bhi 2 string tab differ karega jab at least 1 bit different hoga.
+    Yaha array ka size bhi n hai aur har string ka size bhi n hai.
+
+    Ab string mein har position ke character ko waha se different karne ka try karenge.
+*/
+class Solution {
+public:
+    string findDifferentBinaryString(vector<string>& nums) {
+        int n = nums.size();
+        string ans = "";
+        for(int i=0;i<n;i++){
+            // 1st string ke liye 1st bit, 2nd ke liye 2nd bit and so on.
+            char ch = nums[i][i];
+            // Answer mein different bit daal denge.
+            if(ch=='0')
+                ans+='1';
+            else
+                ans+='0';
+        }
+        return ans;
+    }
+};
