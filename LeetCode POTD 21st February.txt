@@ -1,0 +1,34 @@
+// LC 1261. Find Elements in a Contaminated Binary Tree(Medium).
+
+// Acha conceptual and easy question hai ye.
+/*
+    Basically humara root node 0 hoga aur left node parent se 2*par+1
+    aur right node parent se 2*par+2 hoga.
+
+    Find function ye check karta hai ki bane hue tree mein ye value present hai ki nahi.
+    DFS call kar diye hai, aur saare values ko set mein daal ke check kar liye hai.
+*/
+class FindElements {
+private:
+    unordered_set<int> st;
+    // Bas normal DFS call kar diye hai.
+    void dfs(TreeNode* root, int curr) {
+        if (!root)  // Base case jaha par node hi present nahi hai.
+            return;
+        st.insert(curr);    // value ko set mein daal diye hai.
+        // Left and right ke liye call.
+        dfs(root->left, 2 * curr + 1);
+        dfs(root->right, 2 * curr + 2);
+    }
+
+public:
+    FindElements(TreeNode* root) { 
+        // Ye initialization step hai.
+        dfs(root, 0); 
+    }
+
+    bool find(int target) { 
+        // set mein present hai ki nahi.
+        return st.find(target) != st.end(); 
+    }
+};
