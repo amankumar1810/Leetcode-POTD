@@ -1,0 +1,26 @@
+// LC 2460. Apply Operations to an Array(Easy).
+
+class Solution {
+public:
+    vector<int> applyOperations(vector<int>& nums) {
+        int n = nums.size();
+        int cnt = 0;
+        while(cnt<n-1){
+            if(nums[cnt]==nums[cnt+1]){
+                nums[cnt]*=2;
+                nums[cnt+1]=0;
+            }
+            cnt++;
+        }
+        int k=0;
+        for(int i=0;i<n;i++){
+            if(nums[i]!=0){
+                nums[k] = nums[i];
+                k++;
+            }
+        }
+        for(;k<n;k++)
+            nums[k] = 0;
+        return nums;
+    }
+};
