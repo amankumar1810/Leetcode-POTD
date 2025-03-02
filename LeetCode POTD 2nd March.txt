@@ -1,0 +1,40 @@
+// LC 2570. Merge Two 2D Arrays by Summing Values (Easy).
+
+// Question easy tha but galat access karne se bahut time lag gaya.
+/*
+    Isme hume dono mein se jo common hai keys, unke value ko add kar dena hai.
+    Ek tarah se hume union lena hai dono array ka.
+
+*/
+class Solution {
+public:
+    vector<vector<int>> mergeArrays(vector<vector<int>>& nums1, vector<vector<int>>& nums2) {
+        // Dono array ke values ko map mein store kar liye.
+        map<int, int> mp1;
+        for (auto& i : nums1)
+            mp1[i[0]] += i[1];
+        map<int, int> mp2;
+        for (auto& i : nums2)
+            mp2[i[0]] += i[1];
+
+        vector<vector<int>> ans;
+
+        // Agar koi value aisa hai jo dono mein present hai to unka sum kar lena hai 1st map mein.
+        for(auto &i:nums1){
+            if(mp2.find(i[0])!=mp2.end()){
+                mp1[i[0]]+=mp2[i[0]];
+                mp2.erase(i[0]);    // Kyuki ye 1st mein copy ho gaya to 2nd mein iska kaam nhi hai.
+            }
+        }
+        
+        // Dono map mein se value nikaal kar answer vector mein daal denge.
+        for (auto& i : mp1) 
+            ans.push_back({i.first, i.second});
+        
+        for (auto& i : mp2) 
+            ans.push_back({i.first, i.second});
+        
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
+};
