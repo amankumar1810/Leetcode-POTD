@@ -1,0 +1,33 @@
+// LC 1780. Check if Number is a Sum of Powers of Three(Medium).
+
+// Editorial se padhkar samajh gaye hai.
+/*
+    Hume 3 ke distinct power ke sum mein represent karna hai.
+    Ye to obvious hai ki 3 ke power ke sum mein represent ho hi jaayega
+    Kyuki power=0 ke liye 1 hota hai so add kar karke wo number laa denge.
+    Distinct ka khayaal rakhna hai.
+
+    Hum yaha largest possible power nikaal liye hai.
+
+    Ab har baar utna value kam karte jaayenge.
+    Power bhi kam hota rahega.
+    Agar finally 0 ho jaaye to true.
+*/
+class Solution {
+public:
+    bool checkPowersOfThree(int n) {
+        int power = 0;
+        while(n>=pow(3,power))
+            power++;
+        cout<<power<<endl;
+        while(n>0){
+            if(n>=pow(3,power))
+                n-=pow(3,power);
+            // Phir se wahi power mil gaya hai.
+            if(n>=pow(3,power))
+                return false;
+            power--;
+        }
+        return true;
+    }
+};
