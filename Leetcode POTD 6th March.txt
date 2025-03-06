@@ -1,0 +1,30 @@
+// LC 2965. Find Missing and Repeated Values(Easy).
+
+// Sabse basic idea use karke solve kar diye hai.
+/*
+    Map mein value store kar diye hai.
+    Phir repeating and missing value nikaal liye hai.
+*/
+class Solution {
+public:
+    vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
+        int n = grid.size();
+        // Storing value in map.
+        map<int, int> mp;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                mp[grid[i][j]]++;
+            }
+        }
+        
+        // Missing and repeating value.
+        int missing = 0, repeating = 0;
+        for (int i = 1; i <= n * n; i++) {
+            if (mp.find(i) == mp.end())
+                missing = i;
+            else if (mp[i] == 2)
+                repeating = i;
+        }
+        return {repeating, missing};
+    }
+};
