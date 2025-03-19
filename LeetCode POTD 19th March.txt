@@ -1,0 +1,43 @@
+// LC 3191. Minimum Operations to Make Binary Array Elements Equal to One I(Medium).
+
+// Ye question pehle bana chuke the.
+/*
+    Isme basically hum ye kiye hai ki jaha jaha 0 hai waha se start karke
+    next 3 values ko flip karte gaye hai.
+    Har baar ans++ hua hai.
+
+    Agar pura traverse karne ke baad bhi koi 0 reh jaata hai to
+    array ko 1 mein convert kar paana possible nahi hai.
+*/
+class Solution {
+private:
+    // Value ko Flip karna.
+    int change(int val) {
+        if (val == 0)
+            return 1;
+        else
+            return 0;
+    }
+
+public:
+    int minOperations(vector<int>& nums) {
+        int n = nums.size();
+        int i = 0;
+        int ans = 0;
+        while (i < n - 2) {
+            if (nums[i] == 0) {
+                ans++;
+                nums[i] = change(nums[i]);
+                nums[i + 1] = change(nums[i + 1]);
+                nums[i + 2] = change(nums[i + 2]);
+            }
+            i++;
+        }
+        // Impossible hai.
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 0)
+                return -1;
+        }
+        return ans;
+    }
+};
