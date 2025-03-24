@@ -1,0 +1,38 @@
+// LC 3169. Count Days Without Meetings(Medium).
+
+// bada Interesting question hai.
+/*
+    Logic :-
+    sabse pehle to sort karna hi padega.
+    Main logic hai ki jitna din meeting hai usko ignore karte chalana hai.
+*/
+class Solution {
+public:
+    int countDays(int days, vector<vector<int>>& meetings) {
+        int n = meetings.size();
+        sort(meetings.begin(),meetings.end());
+    
+        int ans=0;
+        // starting me jitna din baad start hua hai meeting usko add karenge.
+        ans+=meetings[0][0]-1;
+        
+        /* maxi lene ka logic ye hai ki agar koi interval pehle aa gaya aur usme 20 tak
+           kaam hua aur aage wale me 10 tak hi kaam hua to 20 tak wala pura cancel ho gya auto matically.
+        */
+
+        int maxi = meetings[0][1];
+        for(int i=1;i<n;i++){
+            // Agar 2 interval ke beech me days bacha hua hai aur unke beech wala day me pehle se meeting nahi hai to unko lena hai.
+            if(meetings[i][0]>meetings[i-1][1] && meetings[i][0]>maxi)
+                ans+=meetings[i][0]-max(meetings[i-1][1],maxi)-1;
+            
+            // har baar maximum maintain karte chalenge.
+            maxi = max(maxi,meetings[i][1]);
+        }
+
+        // last me kitna din bach gaya usko bhi add kar lenge.
+        ans+=days-maxi;
+
+        return ans;
+    }
+};
