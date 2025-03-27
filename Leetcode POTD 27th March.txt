@@ -1,0 +1,52 @@
+// LC 2780. Minimum Index of a Valid Split(Medium).
+
+// POTD ka ye question khudd se 1 hi baar mein ban gaya.
+/*
+    Bas nikaal liye hai ki kaun sa dominant element hai aur freq. kitni hai uski.
+    Ab array ko traverse karke dekh loye hai ki
+    kaha par dono subarray mein wo hi element dominating element bana hua hai.
+
+    Jis index par mile wahi return kar do.
+*/
+class Solution {
+private:
+    // Finding dominant element and its frequency.
+    vector<int> majorityElement(vector<int> &nums){
+        int n = nums.size();
+        unordered_map<int,int> mp;
+        for(int &i:nums)
+            mp[i]++;
+        int cnt=0,ele=0;
+        for(auto &i:mp){
+            if(i.second>cnt){
+                cnt = i.second;
+                ele = i.first;
+            }
+        }
+        return {ele,cnt};
+    }
+public:
+    int minimumIndex(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> result = majorityElement(nums);
+        int majority = result[0];
+        int freq = result[1];
+
+        int cnt1=0;
+        for(int i=0;i<n;i++){
+            int sz1 = (i+1);    // 1st subarray.
+            int sz2 = n-sz1;    // 2nd subarray.
+            
+            // dono subaaray mein dominant element ka count.
+            if(nums[i]==majority)
+                cnt1++;
+            int cnt2 = freq-cnt1;
+
+            // Agar wo abhi bhi dominant element bana hua hai tab index return.
+            if((cnt1>sz1/2) && (cnt2>sz2/2))
+                return i;
+        }
+        // Agar possible nahi hua to -1 return.
+        return -1;
+    }
+};
