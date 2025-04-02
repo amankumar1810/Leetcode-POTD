@@ -1,0 +1,29 @@
+// LC 2873. Maximum Value of an Ordered Triplet I(Easy).
+
+// Ye better method mila hai Solution section mein.
+/*
+    Isme basically O(N) mein solve kar diye hai iss question ko.
+    Yaha par hum maxElement, maxDifference and maxTriplet nikaal rahe hai.
+
+    maxElement ka concept to obvious hai.
+    maxDifference bhi nikaal le rahe hai.
+    maxTriplet jaise bola gaya hai question mein - (arr[i]-arr[j])*arr[k] use kiye hai.
+
+    Hum ye 3 variable reverse order mein calculate kar rahe hai.
+    Isse ensure ye hoga ki hum particular index ke liye sahi answer laa paa rahe hai.
+*/
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        int n = nums.size();
+        long long maxElement = 0;
+        long long maxDifference = 0;
+        long long maxTriplet = 0;
+        for(auto &i:nums){
+            maxTriplet = max(maxTriplet,maxDifference*i);
+            maxDifference = max(maxDifference,maxElement-i);
+            maxElement = max(maxElement,(long long)i);
+        }
+        return maxTriplet;
+    }
+};
