@@ -1,0 +1,40 @@
+// LC 3396. Minimum Number of Operations to Make Elements in Array Distinct(Easy).
+
+// POTD mein khud se ban gaya hai.
+/*
+    Logic easy hai, ek baar mein 3-3 element nikaal rahe hai.
+    Bas dhyaan ye dena hai ki agar 3 se kam element bacha hai, to sabhi nikaal denge.
+    Iske liye ek seperate variable banaye hai hum.
+
+    Freq. ko store karke har traversal par 1-1 ferquency kam karte gaye hai.
+*/
+class Solution {
+public:
+    int minimumOperations(vector<int>& nums) {
+        int n = nums.size();
+        // Storing freq.
+        unordered_map<int, int> mp;
+        for (int& i : nums)
+            mp[i]++;
+        int ans = 0;
+        int i = 0;
+        while (i < n) {
+            int j = 0;
+            // Jitne element bache hue hai, utne hi map me present hai.
+            if (mp.size() == n - i)
+                return ans;
+            // 3 se kam element hone par i<n wala condition kaam karega. 
+            while (i < n && j < 3) {
+                mp[nums[i]]--;
+                // Ye to jaante hi ho.
+                if (mp[nums[i]] == 0)
+                    mp.erase(nums[i]);
+                i++;
+                j++;
+            }
+            // 3-3 ke set ke liye ek baar answer update karna hai.
+            ans++;
+        }
+        return ans;
+    }
+};
