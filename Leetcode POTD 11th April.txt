@@ -1,0 +1,57 @@
+// LC 2843. Count Symmetric Integers(Easy).
+
+// POTD mein aaya to khud se ban gaya.
+/*
+    low and high be beech dekhna hai hume.
+    Sum nikaalne wala logic to kaafi easy hai.
+    String mein convert karke dono half ka sum nikaal liye hai.
+
+    Yaha catch ye hai ki odd length wala kabhi bhi answer nahi ho sakta.
+    Isi liye odd length wale number ko ignore karte gaye hai.
+*/
+class Solution {
+private:
+    // Code for finding Sum.
+    bool isSymmetric(int num){
+        string str = to_string(num);
+        int n = str.size();
+        if(n%2)
+            return false;
+        int sum1=0,sum2=0;
+        // 1st half.
+        for(int i=0;i<n/2;i++)
+            sum1+=(str[i]-'0');
+        
+        // 2nd half.
+        for(int i=n/2;i<n;i++)
+            sum2+=(str[i]-'0');
+        
+        // Sum equal hona chahiye.
+        return sum1==sum2;
+    }
+public:
+    int countSymmetricIntegers(int low, int high) {
+        int num = low;
+        int ans = 0;
+        // Agar 1-length ka hai to ignore.
+        if(num>0 && num<=9)
+            num=10;
+        // 2-length ka bana to answer nikalo.
+        while(num>=low && num<=high && num<=99){
+            if(isSymmetric(num))
+                ans++;
+            num++;
+        }
+        // 3-length ka hai to ignore.
+        if(num>=100 && num<=999)
+            num=1000;
+        // 4-length ka hai to answer nikaalo.
+        while(num>=low && num<=high && num<=9999){
+            if(isSymmetric(num))
+                ans++;
+            num++;
+        }
+        // Maximum number 10000 hi ho sakta hai.
+        return ans;
+    }
+};
