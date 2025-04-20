@@ -1,0 +1,30 @@
+// LC 781. Rabbits in Forest(Medium).
+
+// Ye Naman Sir padhaaye the, acha question hai ye.
+/*
+    Isme basically hum yehi dekhe hai har rabbit truth hi bol raha hai.
+    Jaha par contradiction aayega waha par new colour consider hoga.
+*/
+class Solution {
+public:
+    int numRabbits(vector<int>& answers) {
+        int n = answers.size();
+        unordered_map<int,int> mp;
+        int ans = 0;
+        for(int &i:answers){
+            // Agar iss colour ka 1st time mila hai to jitna bol rha hai
+            // aur khud usko bhi add kar denge.
+            if(mp[i]==0)
+                ans+=(i+1);
+            /*
+                Map ka logic ye hai ki mark kar diye hai particular response.
+                Ab agar saara satisfy ho raha hai tab wo case khatam ho gaya hai.
+                Ab new dekhenge.
+            */
+            mp[i]++;
+            if(mp[i]==i+1)
+                mp[i]=0;
+        }
+        return ans;
+    }
+};
