@@ -1,0 +1,42 @@
+// LC 1399. Count Largest Group(Easy).
+
+// Ek dum Brute Force solution hai, ek hi baar mein ban gaya.
+/*
+    Basically saare numbers ka digits ka sum store kar lena hai.
+    Ab hume waise groups ko count karna hai jisme sabse jyaada element fit hue ho.
+    Unhi groups ka count return karna hai hume.
+*/
+class Solution {
+private:
+    int sum(int num){
+        int res = 0;
+        while(num>0){
+            res+=num%10;
+            num/=10;
+        }
+        return res;
+    }
+public:
+    int countLargestGroup(int n) {
+        unordered_map<int,int> mp;
+        // Digit sum ko store kar liye hai.
+        for(int i=1;i<=n;i++){
+            int res = sum(i);
+            mp[res]++;
+        }
+
+        // Maximum kitna element present hai ek group mein.
+        int maxi = 0;
+        for(auto &i:mp){
+            maxi = max(maxi,i.second);
+        }
+
+        // Waise kitne groups hai jisme maximum element present hai.
+        int ans = 0;
+        for(auto &i:mp){
+            if(i.second==maxi)
+                ans++;
+        }
+        return ans;
+    }
+};
