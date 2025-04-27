@@ -1,0 +1,17 @@
+// LC 3392. Count Subarrays of Length Three With a Condition(Easy).
+
+class Solution {
+public:
+    int countSubarrays(vector<int>& nums) {
+        int n = nums.size();
+        int ans = 0;
+        for (int i = 0; i < n - 2; i++) {
+            int a = nums[i];
+            int b = nums[i + 1];
+            int c = nums[i + 2];
+            if (b == 2 * (a + c))
+                ans++;
+        }
+        return ans;
+    }
+};
