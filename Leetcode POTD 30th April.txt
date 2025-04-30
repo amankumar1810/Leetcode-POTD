@@ -1,0 +1,25 @@
+// LC 1295. Find Numbers with Even Number of Digits(Easy).
+
+// Ek dum basic question hai ye.
+class Solution {
+private:
+    bool isValid(int num) {
+        int cnt = 0;
+        while (num) {
+            cnt++;
+            num /= 10;
+        }
+        return cnt % 2 == 0;
+    }
+
+public:
+    int findNumbers(vector<int>& nums) {
+        int n = nums.size();
+        int cnt = 0;
+        for (int i = 0; i < n; i++) {
+            if (isValid(nums[i]))
+                cnt++;
+        }
+        return cnt;
+    }
+};
