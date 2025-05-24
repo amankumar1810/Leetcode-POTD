@@ -1,0 +1,21 @@
+// LC 2942. Find Words Containing Character(Easy).
+
+class Solution {
+private:
+    bool isPresent(string &word, char x){
+        for(auto &i:word){
+            if(i==x)
+                return true;
+        }
+        return false;
+    }
+public:
+    vector<int> findWordsContaining(vector<string>& words, char x) {
+        vector<int> ans;
+        for(int i=0;i<words.size();i++){
+            if(isPresent(words[i],x))
+                ans.push_back(i);
+        }
+        return ans;
+    }
+};
